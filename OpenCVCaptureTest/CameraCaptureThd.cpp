@@ -103,7 +103,7 @@ bool CCameraCaptureThd::SetCameraAutoExposure(const bool &_bAuto)
     }
     if (_bAuto)
     {
-        bRet = m_capture.set(cv::CAP_PROP_AUTO_EXPOSURE, 0.75);
+        bRet = m_capture.set(cv::CAP_PROP_AUTO_EXPOSURE, 0);
     }
     else
     {
