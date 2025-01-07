@@ -23,8 +23,12 @@ public:
     bool Init();
     void StartCapture();
     void StopCapture();
+    bool IsCapture();
     bool SetCameraBrightness(const int &_iBrightness);
     bool SetCameraExposure(const int &_iExposure);
+    bool SetCameraAutoExposure(const bool &_bAuto);
+    bool SetCameraAutoExposureValue(double _dAutoExposure);
+    bool SetCameraAutoWB(bool _bAutoWB);
 signals:
     void SIGNAL_UpdateRgbImage(const QImage& img);
     void SIGNAL_CameraWrong();

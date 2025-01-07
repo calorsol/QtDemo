@@ -52,5 +52,30 @@ void MainWindow::on_btnSetBrightness_clicked()
 
 void MainWindow::on_btnSetExposure_clicked()
 {
+//    gCameraCaptureThd::instance()->SetCameraAutoExposure(true);
+//    QThread::msleep(100);
+//    gCameraCaptureThd::instance()->SetCameraAutoExposure(false);
+//    QThread::msleep(100);
     gCameraCaptureThd::instance()->SetCameraExposure(ui->edtExposure->text().toInt());
+}
+
+void MainWindow::on_btnSetAutoExposure_clicked()
+{
+    gCameraCaptureThd::instance()->SetCameraAutoExposureValue(ui->edtAutoExposure->text().toDouble());
+}
+
+void MainWindow::on_btnSetWB_clicked()
+{
+    static bool bFlag = false;
+
+    if (bFlag)
+    {
+        gCameraCaptureThd::instance()->SetCameraAutoWB(bFlag);
+        bFlag = false;
+    }
+    else
+    {
+        gCameraCaptureThd::instance()->SetCameraAutoWB(bFlag);
+        bFlag = true;
+    }
 }

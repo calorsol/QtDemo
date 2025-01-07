@@ -28,6 +28,10 @@ private slots:
 
     void on_btnSetExposure_clicked();
 
+    void on_btnSetAutoExposure_clicked();
+
+    void on_btnSetWB_clicked();
+
 private:
     Ui::MainWindow *ui;
 

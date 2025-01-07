@@ -38,11 +38,20 @@ HEADERS  += MainWindow.h \
     CameraWidget.h
 
 FORMS    += MainWindow.ui
-INCLUDEPATH += $$PWD/lib/opencv/include
+#INCLUDEPATH += $$PWD/lib/opencv/include
+
+#Debug:{
+#    LIBS += $$PWD/lib/opencv/lib/opencv_world455d.lib
+#}
+#Release:{
+#    LIBS += $$PWD/lib/opencv/lib/opencv_world455.lib
+#}
+
+INCLUDEPATH += $$PWD/lib/opencv_4.7.0/include
 
 Debug:{
-    LIBS += $$PWD/lib/opencv/lib/opencv_world455d.lib
+    LIBS += $$PWD/lib/opencv_4.7.0/lib/opencv_world470d.lib
 }
 Release:{
-    LIBS += $$PWD/lib/opencv/lib/opencv_world455.lib
+    LIBS += $$PWD/lib/opencv_4.7.0/lib/opencv_world470.lib
 }

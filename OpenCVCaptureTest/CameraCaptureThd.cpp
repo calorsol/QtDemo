@@ -11,10 +11,12 @@ CCameraCaptureThd::CCameraCaptureThd(QObject* parent) : CBaseThd(parent)
 CCameraCaptureThd::~CCameraCaptureThd()
 {
     StopCapture();
+    qDebug() << "---> CCameraCaptureThd::~CCameraCaptureThd release:"<<m_capture.isOpened();
     if (m_capture.isOpened())
     {
         m_capture.release();
     }
+
 }
 
 bool CCameraCaptureThd::Init()
@@ -23,13 +25,14 @@ bool CCameraCaptureThd::Init()
 
     while (true)
     {
-        m_bInit = m_capture.open(0+cv::CAP_DSHOW, cv::CAP_ANY);  // 打开默认摄像头
+        m_bInit = m_capture.open(0, cv::CAP_DSHOW);  // 打开默认摄像头
+//        m_capture.set(cv::CAP_PROP_FPS, 30);
         m_capture.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
         m_capture.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
         m_capture.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
+
         if (m_bInit)
         {
-
             return true;
         }
         else
@@ -50,14 +53,16 @@ bool CCameraCaptureThd::Init()
 void CCameraCaptureThd::StartCapture()
 {
     m_bCapture = true;
-    double dExpore = m_capture.get(cv::CAP_PROP_EXPOSURE);
-    double dBrightness = m_capture.get(cv::CAP_PROP_BRIGHTNESS);
-    qDebug() << "---> dExpore:"<<dExpore<<"||"<<dBrightness;
 }
 
 void CCameraCaptureThd::StopCapture()
 {
     m_bCapture = false;
+}
+
+bool CCameraCaptureThd::IsCapture()
+{
+    return m_bCapture;
 }
 
 bool CCameraCaptureThd::SetCameraBrightness(const int &_iBrightness)
@@ -67,10 +72,10 @@ bool CCameraCaptureThd::SetCameraBrightness(const int &_iBrightness)
     {
         return bRet;
     }
-    qDebug() << "---> CCameraCaptureThd::SetCameraBrightness _iBrightness:"<<_iBrightness;
+    qDebug() << "---> CCameraCaptureThd::SetCameraBrightness _iBrightness set:"<<_iBrightness;
     bRet = m_capture.set(cv::CAP_PROP_BRIGHTNESS, _iBrightness);
     double dBrightness = m_capture.get(cv::CAP_PROP_BRIGHTNESS);
-    qDebug() << "---> CCameraCaptureThd dBrightness:"<<dBrightness;
+    qDebug() << "---> CCameraCaptureThd dBrightness get:"<<dBrightness;
     return bRet;
 }
 
@@ -81,11 +86,58 @@ bool CCameraCaptureThd::SetCameraExposure(const int &_iExposure)
     {
         return bRet;
     }
-    qDebug() << "---> CCameraCaptureThd::SetCameraExposure _iExposure:"<<_iExposure;
+    qDebug() << "---> CCameraCaptureThd::SetCameraExposure set _iExposure:"<<_iExposure;
     bRet = m_capture.set(cv::CAP_PROP_EXPOSURE, _iExposure);
 
     double dExpore = m_capture.get(cv::CAP_PROP_EXPOSURE);
-    qDebug() << "---> CCameraCaptureThd dExpore:"<<dExpore;
+    qDebug() << "---> CCameraCaptureThd dExpore get:"<<dExpore;
+    return bRet;
+}
+
+bool CCameraCaptureThd::SetCameraAutoExposure(const bool &_bAuto)
+{
+    bool bRet = false;
+    if (false == m_capture.isOpened())
+    {
+        return bRet;
+    }
+    if (_bAuto)
+    {
+        bRet = m_capture.set(cv::CAP_PROP_AUTO_EXPOSURE, 0.75);
+    }
+    else
+    {
+        bRet = m_capture.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+    }
+
+    qDebug() << "---> CCameraCaptureThd::SetCameraAutoExposure1:"<<_bAuto<<"||"<<m_capture.get(cv::CAP_PROP_AUTO_EXPOSURE)<<"||"<<m_capture.get(cv::CAP_PROP_EXPOSURE);
+    return bRet;
+}
+
+bool CCameraCaptureThd::SetCameraAutoExposureValue(double _dAutoExposure)
+{
+    bool bRet = false;
+    if (false == m_capture.isOpened())
+    {
+        return bRet;
+    }
+
+    bRet = m_capture.set(cv::CAP_PROP_AUTO_EXPOSURE, _dAutoExposure);
+    qDebug() << "---> CCameraCaptureThd::SetCameraAutoExposureValue bRet:"<<bRet<<"||"<<_dAutoExposure<<"||"<<m_capture.get(cv::CAP_PROP_AUTO_EXPOSURE);
+    return bRet;
+}
+
+bool CCameraCaptureThd::SetCameraAutoWB(bool _bAutoWB)
+{
+    bool bRet = false;
+    if (false == m_capture.isOpened())
+    {
+        return bRet;
+    }
+
+//    bRet = m_capture.set(cv::CAP_PROP_AUTO_WB, _bAutoWB);
+//    qDebug() << "---> CCameraCaptureThd::SetCameraAutoWB bRet:"<<bRet<<"||"<<_bAutoWB<<"||"<<m_capture.get(cv::CAP_PROP_AUTO_WB);
+    bRet = m_capture.set(cv::CAP_PROP_SETTINGS, 1);
     return bRet;
 }
 
@@ -114,7 +166,7 @@ void CCameraCaptureThd::run()
         if (!frame.empty())
         {
             processFrame(frame);
-            calculateFps(); // 每处理一帧计算一次 FPS
+//            calculateFps(); // 每处理一帧计算一次 FPS
         }
     }
 }

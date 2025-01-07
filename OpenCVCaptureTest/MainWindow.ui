@@ -132,7 +132,7 @@
     <property name="geometry">
      <rect>
       <x>800</x>
-      <y>470</y>
+      <y>530</y>
       <width>91</width>
       <height>41</height>
      </rect>
@@ -145,13 +145,62 @@
     <property name="geometry">
      <rect>
       <x>920</x>
-      <y>470</y>
+      <y>530</y>
       <width>181</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>470</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>自动曝光</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="edtAutoExposure">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>460</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSetAutoExposure">
+    <property name="geometry">
+     <rect>
+      <x>1140</x>
+      <y>460</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>设置</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSetWB">
+    <property name="geometry">
+     <rect>
+      <x>1140</x>
+      <y>590</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>WB</string>
     </property>
    </widget>
   </widget>
