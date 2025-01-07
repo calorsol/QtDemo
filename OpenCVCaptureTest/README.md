@@ -19,7 +19,7 @@
 
 2、Qt 5.8.0 MSVC2015
 
-3、OpenCV VS2015编译的
+3、OpenCV4.5.5 VS2019编译的
 
 ## 二、效果展示
 ![121111](https://github.com/user-attachments/assets/6ad0824e-9c91-43b2-ba01-191e72c750f7)
